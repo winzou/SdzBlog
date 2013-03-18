@@ -25,6 +25,7 @@ class AppKernel extends Kernel
             new FOS\UserBundle\FOSUserBundle(),
             new Knp\Bundle\MarkdownBundle\KnpMarkdownBundle(),
             new Ornicar\AkismetBundle\OrnicarAkismetBundle(),
+            new winzou\CoreBundle\winzouCoreBundle(),
         );
 
         if (in_array($this->getEnvironment(), array('dev', 'test'))) {

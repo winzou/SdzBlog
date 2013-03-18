@@ -7,6 +7,9 @@ SdzBlogBundlePrefix:
     resource: "@SdzBlogBundle/Resources/config/routing.yml"
     prefix:   /blog
 
+winzouBlogBundle:
+    resource: "@winzouCoreBundle/Resources/config/routing.yml"
+
 # Les imports pour FOSUB :
 fos_user_security:
     resource: "@FOSUserBundle/Resources/config/routing/security.xml"

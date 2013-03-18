@@ -1,0 +1,6 @@
+services:
+    winzoucore.response_listener:
+        class: winzou\CoreBundle\Response\ResponseListener
+        arguments: [%kernel.environment%, @templating.engine.twig]
+        tags:
+            - { name: kernel.event_listener, event: kernel.response, method: onKernelResponse, priority: -128 }

@@ -20,11 +20,11 @@ class AppKernel extends Kernel
             new JMS\DiExtraBundle\JMSDiExtraBundle($this),
             new JMS\SecurityExtraBundle\JMSSecurityExtraBundle(),
             new Sdz\BlogBundle\SdzBlogBundle(),
-        	  new Stof\DoctrineExtensionsBundle\StofDoctrineExtensionsBundle(),
+            new Stof\DoctrineExtensionsBundle\StofDoctrineExtensionsBundle(),
             new Sdz\UserBundle\SdzUserBundle(),
-        	  new FOS\UserBundle\FOSUserBundle(),
-        	  new Knp\Bundle\MarkdownBundle\KnpMarkdownBundle(),
-        	  new Ornicar\AkismetBundle\OrnicarAkismetBundle(),
+            new FOS\UserBundle\FOSUserBundle(),
+            new Knp\Bundle\MarkdownBundle\KnpMarkdownBundle(),
+            new Ornicar\AkismetBundle\OrnicarAkismetBundle(),
         );
 
         if (in_array($this->getEnvironment(), array('dev', 'test'))) {

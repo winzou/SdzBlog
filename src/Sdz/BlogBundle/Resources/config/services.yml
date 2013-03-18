@@ -1,0 +1,46 @@
+parameters:
+#    sdz_blog.example.class: Sdz\BlogBundle\Example
+
+services:
+    sdzblog.antispam:
+        class:     Sdz\BlogBundle\Antispam\SdzAntispam
+        arguments: [@mailer, 5]
+        calls:
+            - [ setLocale, [%locale%] ]
+        tags:
+            -  { name: twig.extension }
+        
+    sdzblog.censure_listener:
+        class: Sdz\BlogBundle\Bigbrother\CensureListener
+        arguments:
+            - [1, 2]                # 1er argument = liste des id des membres à surveiller (totalement arbitraire)
+            - %sdzblog.dest_email%  # 2e argument = le destinataire des emails
+            - @mailer               # 3e argument = le service pour envoyer des emails
+        tags:
+            - { name: kernel.event_listener, event: sdzblog.bigbrother.post_message, method: onMessagePost }
+         
+    sdzblog.beta_listener:
+        class: Sdz\BlogBundle\Beta\BetaListener
+        arguments: ["2013-01-01"]
+        tags:
+            - { name: kernel.event_listener, event: kernel.response, method: onKernelResponse, priority: 2 }
+
+    sdzblog.paramconverter_test:
+        class:     Sdz\BlogBundle\ParamConverter\TestParamConverter
+        arguments: ['Sdz\BlogBundle\Entity\Site', @doctrine.orm.entity_manager]
+        tags:
+            - { name: request.param_converter, priority: 20 }
+
+    sdzblog.validator.akismet:
+        class:     Sdz\BlogBundle\Akismet\AkismetValidator
+        arguments: [@ornicar_akismet, @security.context]
+        scope:     request
+        tags:
+            - { name: validator.constraint_validator, alias: akismet }
+
+    sdzblog.validator.antiflood:                                # Le nom du service
+        class:     Sdz\BlogBundle\Validator\AntiFloodValidator  # La classe du service, ici notre validateur déjà créé
+        arguments: [@request, @doctrine.orm.entity_manager]     # Les données qu'on injecte au service : la requête et l'EntityManager
+        scope:     request                                      # Comme on injecte la requête, on doit préciser ce scope
+        tags:
+            - { name: validator.constraint_validator, alias: sdzblog_antiflood }  # C'est avec l'alias qu'on retrouvera le service

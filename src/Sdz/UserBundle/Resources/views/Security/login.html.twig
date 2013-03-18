@@ -1,0 +1,47 @@
+{# src/Sdz/UserBundle/Resources/views/Security/login.html.twig #}
+
+{% extends "SdzUserBundle::layout.html.twig" %}
+
+{% block body %}
+
+  {# S'il y a une erreur, on l'affiche dans un joli cadre #}
+  {% if error %}
+    <div class="alert alert-error">{{ error }}</div>
+  {% endif %}
+
+  {# Le formulaire, avec URL de soumission vers la route "login_check" comme on l'a vu
+     Ici, j'ai repris le contenu du login.html.twig de FOSUserBundle #}
+
+  {# En fait on pourrait très bien inclure la vue "login_content" plutôt que de tout réécrire,
+     Mais ici, la présentation diffère suivant que le formulaire est affiché seul dans sa page,
+     ou intégré dans le menu (plus étroit) #}
+  <form action="{{ path("fos_user_security_check") }}" method="post" class="form-horizontal">
+    <input type="hidden" name="_csrf_token" value="{{ csrf_token }}" />
+
+    <div class="control-group">
+      <label for="username" class="control-label">{{ 'security.login.username'|trans({}, 'FOSUserBundle') }}</label>
+      <div class="controls">
+        <input type="text" id="username" name="_username" value="{{ last_username }}" required="required" />
+      </div>
+    </div>
+
+    <div class="control-group">
+      <label for="password" class="control-label">{{ 'security.login.password'|trans({}, 'FOSUserBundle') }}</label>
+      <div class="controls">
+        <input type="password" id="password" name="_password" required="required" />
+      </div>
+    </div>
+
+    <div class="control-group">
+      <div class="controls">
+        <label for="remember_me" class="checkbox">
+          <input type="checkbox" id="remember_me" name="_remember_me" value="on" />
+          {{ 'security.login.remember_me'|trans({}, 'FOSUserBundle') }}
+        </label>
+
+        <button type="submit" id="_submit" name="_submit" class="btn">{{ 'security.login.submit'|trans({}, 'FOSUserBundle') }}</button>
+      </div>
+    </div>
+  </form>
+
+{% endblock %}

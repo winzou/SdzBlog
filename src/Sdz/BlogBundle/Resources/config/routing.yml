@@ -1,0 +1,30 @@
+sdzblog_ajouter:
+    pattern:   /ajouter
+    defaults:  { _controller: SdzBlogBundle:Blog:ajouter }
+
+sdzblog_modifier:
+    pattern:   /modifier/{id}
+    defaults:  { _controller: SdzBlogBundle:Blog:modifier }
+    requirements:
+        id:  \d+
+
+sdzblog_supprimer:
+    pattern:   /supprimer/{id}
+    defaults:  { _controller: SdzBlogBundle:Blog:supprimer }
+    requirements:
+        id:  \d+
+
+sdzblog_feed:
+    pattern:   /feed.rss
+    defaults:  { _controller: SdzBlogBundle:Blog:feed }
+
+sdzblog_voir:
+    pattern:   /{slug}
+    defaults:  { _controller: SdzBlogBundle:Blog:voir }
+
+sdzblog_ajouter_commentaire:
+    pattern:  /ajouter/{id}/commentaire
+    defaults: { _controller: SdzBlogBundle:Blog:ajouterCommentaire }
+    methods:  POST
+    requirements:
+        id:      \d+

@@ -1,0 +1,23 @@
+parameters:
+    database_driver:   pdo_mysql
+    database_host:     localhost
+    database_port:     ~
+    database_name:     
+    database_user:     
+    database_password: 
+
+    mailer_transport:  
+    mailer_host:       
+    mailer_user:       
+    mailer_password:   
+
+    locale:            fr
+    secret:            ThisTokenIsNotSoSecretChangeIt
+    
+    java_path: C:\Program Files (x86)\Java\jre7\bin\java.exe
+    
+    sdzblog.nombre_par_page: 5
+    sdzblog.dest_email:      vous@vous.Com
+
+    akismet_key: votre_cle
+    akismet_url: votre_site

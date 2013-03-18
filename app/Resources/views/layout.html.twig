@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="author" content="Alexandre Bacco">
+    <meta name="keywords" content="Symfony2, Symfony, Symfony2.1, Symfony2.2, tutoriel, tutorial, blog, checklist, livre, cours">
+
+    <title>{% block title %}Tutoriel-Symfony2{% endblock %}</title>
+
+    {% block stylesheets %}
+      {% stylesheets output='css/main.css' filter='cssrewrite, ?yui_css'
+        'css/bootstrap.css'
+        '@SdzBlogBundle/Resources/public/css/main.css' %}
+        <link rel="stylesheet" href="{{ asset_url }}" type="text/css" />
+      {% endstylesheets %}
+    {% endblock %}
+  </head>
+
+  <body>
+    <div class="container">
+      <div id="header" class="hero-unit">
+        <h1>Mon Projet Symfony2</h1>
+        <p>Ce projet est propulsé par Symfony2, et construit grâce au tutoriel du siteduzero.</p>
+        <p><a class="btn btn-primary btn-large" href="http://www.siteduzero.com/informatique/tutoriels/developpez-votre-site-web-avec-le-framework-symfony2">
+          Lire le tutoriel &raquo;
+        </a></p>
+      </div>
+
+      <div class="row">
+        <div id="menu" class="span3">
+          <h3>Le blog</h3>
+          <ul class="nav nav-pills nav-stacked">
+            <li><a href="{{ path('sdzblog_accueil') }}">Accueil du blog</a></li>
+            {# On n'affiche le lien pour ajouter un article qu'aux utilisateurs disposant du rôle ROLE_AUTEUR #}
+            {% if is_granted('ROLE_AUTEUR') %}
+              <li><a href="{{ path('sdzblog_ajouter') }}">Ajouter un article</a></li>
+            {% endif %}
+          </ul>
+
+          <!-- winzouCoreBundle::injectAdsense -->
+
+          {# On affiche les 3 derniers articles #}
+          {{ render(controller("SdzBlogBundle:Blog:menu", {'nombre': 3})) }}
+
+          {# On affiche un coin espace membre :
+             * Si le membre est identifié : lien de déconnexion
+             * Sinon : formulaire de connexion #}
+          {% if is_granted('IS_AUTHENTICATED_REMEMBERED') %}
+            <h3>Membre</h3>
+            <ul class="nav nav-pills nav-stacked">
+              <li>{{ 'layout.logged_in_as'|trans({'%username%': app.user.username}, 'FOSUserBundle') }}</li>
+              <li><a href="{{ path('fos_user_security_logout') }}">{{ 'layout.logout'|trans({}, 'FOSUserBundle') }}</a></li>
+            </ul>
+          {# On affiche le formulaire de login, sauf sur la page de connexion #}
+          {% elseif app.request.attributes.get('_route') != 'fos_user_security_login' %}
+            <h3>Identification</h3>
+            {{ render(controller('SdzUserBundle:Security:login')) }}
+          {% endif %}
+        </div>
+
+        {# Contenu central de la page #}
+        <div id="content" class="span9">
+          {% block body %}
+          {% endblock %}
+        </div>
+      </div>
+
+      <hr>
+
+      <footer>
+        <p>
+          The sky's the limit &copy; 2013 and beyond - <a href="{{ path('sdzblog_feed') }}">Flux RSS Blog</a>
+          -
+          <a href="https://twitter.com/winzou_" class="twitter-follow-button" data-show-count="false" data-lang="fr" data-dnt="true">Suivre @winzou_</a>
+        </p>
+      </footer>
+    </div>
+
+    {% block javascripts %}
+      {# jQuery depuis le CDN de Google, ou fallback sur une copie locale #}
+      <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.0/jquery.min.js"></script>
+      <script>window.jQuery || document.write('<script src="{{ asset('js/jquery.min.js') }}"><\/script>')</script>
+
+      {# Tous nos javascripts avec Assetic #}
+      {% javascripts output='js/main.js' filter='?yui_js'
+        'js/bootstrap.js'
+        '@SdzBlogBundle/Resources/public/js/*' %}
+        <script type="text/javascript" src="{{ asset_url }}"></script>
+      {% endjavascripts %}
+    {% endblock %}
+  </body>
+</html>

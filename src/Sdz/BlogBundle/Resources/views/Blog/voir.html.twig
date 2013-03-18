@@ -1,0 +1,47 @@
+{# src/Sdz/BlogBundle/Resources/views/Blog/voir.html.twig #}
+
+{% extends "SdzBlogBundle::layout.html.twig" %}
+
+{% block title %}
+    Lecture d'un article - {{ parent() }}
+{% endblock %}
+
+{% block sdzblog_body %}
+
+  {% include "SdzBlogBundle:Blog:article.html.twig" %}
+
+  <p>
+    <a href="{{ path('sdzblog_accueil') }}" class="btn">
+      <i class="icon-chevron-left"></i>
+      Retour à la liste
+    </a>
+    {% if is_granted('ROLE_AUTEUR') %}
+      <a href="{{ path('sdzblog_modifier', {'id': article.id}) }}" class="btn">
+        <i class="icon-edit"></i>
+        Modifier l'article
+      </a>
+    {% endif %}
+    {% if is_granted('ROLE_ADMIN') %}
+      <a href="{{ path('sdzblog_supprimer', {'id': article.id}) }}" class="btn">
+        <i class="icon-trash"></i>
+        Supprimer l'article
+      </a>
+    {% endif %}
+  </p>
+
+  <h3>Commentaires</h3>
+
+  {% for commentaire in commentaires %}
+    {% include "SdzBlogBundle:Blog:commentaire.html.twig" %}
+    <hr />
+  {% else %}
+    <p>Pas encore de commentaire.</p>
+  {% endfor %}
+
+  <h3>Poster un nouveau commentaire</h3>
+  <form method="post" action="{{ path('sdzblog_ajouter_commentaire', {'id': article.id}) }}">
+    {{ form_widget(form) }}
+    <input type="submit" value="Ajouter" class="btn btn-primary" />
+  </form>
+
+{% endblock %}

@@ -1,0 +1,6 @@
+# J'ai sorti cette route afin de ne pas avoir le préfixe /blog lors de l'import
+sdzblog_accueil:
+    pattern:   /{page}
+    defaults:  { _controller: SdzBlogBundle:Blog:index, page: 1 }
+    requirements:
+        page:  \d+

@@ -1,0 +1,87 @@
+{# src/Sdz/BlogBundle/Resources/views/Blog/formulaire.html.twig #}
+
+{# Cette vue n'hérite de personne, elle sera inclue par d'autres vues qui, elles, hériteront sûrement du layout. #}
+{# Je dis "sûrement" car, ici pour cette vue, on n'en sait rien et c'est une info qui ne nous concerne pas. #}
+
+<h3>Formulaire d'article</h3>
+
+<div class="well">
+    <form method="post" {{ form_enctype(form) }}>
+        {{ form_widget(form) }}
+
+        <input type="submit" class="btn btn-primary" />
+    </form>
+</div>
+
+{# On charge la librairie jQuery. Ici, je la prends depuis le site jquery.com, mais si vous l'avez en local, changez simplement l'adresse. #}
+<script src="http://code.jquery.com/jquery-1.8.2.min.js"></script>
+
+<script type="text/javascript">
+$(document).ready(function() {
+  // On récupère la balise <div> en question qui contient l'attribut « data-prototype » qui nous intéresse.
+  var $container = $('div#sdz_blogbundle_articletype_articleCompetences');
+
+  if ($container.length == 0) {
+    $container = $('div#sdz_blogbundle_articleedittype_articleCompetences');
+  }
+
+  if ($container.length == 0) {
+    $container = $('');
+  }
+
+  // On ajoute un lien pour ajouter une nouvelle catégorie
+  var $lienAjout = $('<a href="#" id="ajout_categorie" class="btn">Ajouter une catégorie</a>');
+  $container.append($lienAjout);
+
+  // On ajoute un nouveau champ à chaque clic sur le lien d'ajout.
+  $lienAjout.click(function(e) {
+    ajouterCategorie($container);
+    e.preventDefault(); // évite qu'un # apparaisse dans l'URL
+    return false;
+  });
+
+  // On définit un compteur unique pour nommer les champs qu'on va ajouter dynamiquement
+  var index = $container.find(':input').length;
+
+  if (index > 0) {
+    // Pour chaque catégorie déjà existante, on ajoute un lien de suppression
+    $container.children('div').each(function() {
+      ajouterLienSuppression($(this));
+    });
+  }
+
+  // La fonction qui ajoute un formulaire Categorie
+  function ajouterCategorie($container) {
+    // Dans le contenu de l'attribut « data-prototype », on remplace :
+    // - le texte "__name__label__" qu'il contient par le label du champ
+    // - le texte "__name__" qu'il contient par le numéro du champ
+    var $prototype = $($container.attr('data-prototype').replace(/__name__label__/g, 'Catégorie n°' + (index+1))
+                                                        .replace(/__name__/g, index));
+
+    // On ajoute au prototype un lien pour pouvoir supprimer la catégorie
+    ajouterLienSuppression($prototype);
+
+    // On ajoute le prototype modifié à la fin de la balise <div>
+    $container.append($prototype);
+
+    // Enfin, on incrémente le compteur pour que le prochain ajout se fasse avec un autre numéro
+    index++;
+  }
+
+  // La fonction qui ajoute un lien de suppression d'une catégorie
+  function ajouterLienSuppression($prototype) {
+    // Création du lien
+    $lienSuppression = $('<a href="#" class="btn btn-danger">Supprimer</a><br /><br />');
+
+    // Ajout du lien
+    $prototype.append($lienSuppression);
+
+    // Ajout du listener sur le clic du lien
+    $lienSuppression.click(function(e) {
+      $prototype.remove();
+      e.preventDefault(); // évite qu'un # apparaisse dans l'URL
+      return false;
+    });
+  }
+});
+</script>

@@ -1,0 +1,61 @@
+{# src/Sdz/BlogBundle/Resources/views/Blog/article.html.twig #}
+
+{# On utilise une variable temporaire, qu'on définit à false si elle n'est pas déjà définit #}
+{% set accueil = accueil|default(false) %}
+
+{# On utilise une macro Twig pour afficher :
+   * Soit le nom de l'auteur anonyme de l'auteur
+   * Soit son nom et un lien vers son profil s'il était identifié #}
+{% import "SdzUserBundle::userHelpers.html.twig" as userHelpers %}
+
+<div itemscope itemtype="http://schema.org/Article">
+
+    <h2 itemprop="name">
+      {# On vérifie qu'une image soit bien associée à l'article #}
+      {% if article.image is not null %}
+        <img src="{{ asset(article.image.webPath) }}" alt="{{ article.image.alt }}" />
+      {% endif %}
+
+      {# Si on est sur la page d'accueil, on fait un lien vers l'article, sinon non #}
+      {% if accueil %}
+        <a href="{{ path('sdzblog_voir', {'slug': article.slug} ) }}">{{ article.titre }}</a>
+      {% else %}
+        {{ article.titre }}
+      {% endif %}
+    </h2>
+
+    <i>
+        Le <time datetime="{{ article.date|date('c') }}" itemprop="datePublished">{{ article.date|date('d/m/Y') }}</time>,
+        par <span itemprop="author">{{ userHelpers.link(article.user, article.auteur) }}</span>.
+    </i>
+
+    <div class="well" itemprop="articleBody">
+        {# On parse les messages en MarkDown grâce à KnpMardownBundle #}
+        {{ article.contenu|markdown }}
+    </div>
+
+    <div class="well well-small">
+        <p><i>
+            {# On affiche les catégories éventuelles #}
+            {% if article.categories.count > 0 %}
+                Catégories :
+                {% for categorie in article.categories %}
+                    {{ categorie.nom }}{% if not loop.last %}, {% endif %}
+                {% endfor %}
+            {% endif %}
+
+            {# On affiche les compétences éventuelles #}
+            {% if article.articleCompetences|length > 0 %}
+                - Compétences utilisées :
+                {% for articleCompetence in article.articleCompetences %}
+                    {{ articleCompetence.competence.nom }} : {{ articleCompetence.textNiveau }}{% if not loop.last %}, {% else %}.{% endif %}
+                {% endfor %}
+            {% endif %}
+        </i></p>
+
+        <span class='st_facebook_hcount' st_url="{{ url('sdzblog_voir', {'slug': article.slug}) }}" displayText='Facebook'></span>
+        <span class='st_twitter_hcount' st_url="{{ url('sdzblog_voir', {'slug': article.slug}) }}" st_title="{{ article.titre }} - sur Tutoriel-Symfony2.fr" displayText='Tweet'></span>
+        <span class='st_plusone_hcount' st_url="{{ url('sdzblog_voir', {'slug': article.slug}) }}" displayText='Google +1'></span>
+        <span class='st_linkedin_hcount' st_url="{{ url('sdzblog_voir', {'slug': article.slug}) }}" displayText='LinkedIn'></span>
+    </div>
+</div>

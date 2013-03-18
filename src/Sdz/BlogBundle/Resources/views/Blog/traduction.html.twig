@@ -1,0 +1,10 @@
+﻿<html>
+  <body>
+    {{ 'hello'|trans({'%name%': name}) }}
+{% for i in 0..2 %}
+	<p>{{ ('charte.donnee.' ~ i )|trans }}</p>
+{% endfor %}
+{{ 'article.nombre'|transchoice(2) }}
+Aujourd'hui nous somme le {{ 'now'|localizeddate('full', 'none') }} et il est {{ 'now'|localizeddate('none', 'short') }}
+  </body>
+</html>

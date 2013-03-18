@@ -1,0 +1,32 @@
+{# src/Sdz/BlogBundle/Resources/views/layout.html.twig #}
+
+{% extends "::layout.html.twig" %}
+
+{% block title %}
+    Blog - {{ parent() }}
+{% endblock %}
+
+{% block body %}
+
+    {# On définit un sous-titre commun à toutes les pages du bundle, par exemple #}
+    <h1>Blog</h1>
+
+    <hr>
+
+    {# On gère les messages flash de façon globale pour tout le bundle
+       On peut catégoriser les messages dans différents sacs (bag),
+       ici on les a mis dans "info", "success" et "error", qui correspondent aux classes CSS du Bootstrap #}
+    
+    {% for type in ['info', 'success', 'error'] %}
+        {% for message in app.session.flashbag.get(type) %}
+            <div class="alert alert-{{ type }}">
+                {{ message }}
+            </div>
+        {% endfor %}
+    {% endfor %}
+
+    {# On définit un nouveau block, que les vues du bundle pourront remplir #}
+    {% block sdzblog_body %}
+    {% endblock %}
+
+{% endblock %}

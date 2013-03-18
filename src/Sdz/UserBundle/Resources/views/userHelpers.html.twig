@@ -1,0 +1,14 @@
+{% macro link(user, username) %}
+  {% spaceless %}
+
+  {% if user is not null %}
+    {# J'ai désactivé le lien car on n'a pas de page de profil pour le moment #}
+    {#<a href="{{ path('sdzuser_voir', {'username': user.username}) }}">#}
+        {{ user.username }}
+    {#</a>#}
+  {% else %}
+    {{ username }}
+  {% endif %}
+
+  {% endspaceless %}
+{% endmacro %}

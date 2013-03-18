@@ -1,0 +1,9 @@
+{# src/Sdz/BlogBundle/Resources/views/Blog/menu.html.twig #}
+
+<h3>Les derniers articles</h3>
+
+<ul class="nav nav-pills nav-stacked">
+    {% for article in liste_articles %}
+        <li><a href="{{ path('sdzblog_voir', {'slug': article.slug}) }}">{{ article.titre }}</a></li>
+    {% endfor %}
+</ul>

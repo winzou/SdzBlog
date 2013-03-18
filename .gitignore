@@ -1,0 +1,21 @@
+# Bootstrap
+app/bootstrap*
+
+# Symfony directories
+vendor/*
+*/logs/*
+*/cache/*
+web/uploads/*
+web/bundles/*
+
+# Configuration files
+app/config/parameters.yml
+
+# Eclipse files
+.settings
+.buildpath
+.project
+
+# Capifony
+Capfile
+app/config/deploy.rb

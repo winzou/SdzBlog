@@ -85,6 +85,13 @@ class ResponseListener
       );
     }
 
+    // Amazon est injecté avant le header
+    if (false !== $pos = $posrFunction($content, '<div id="header"')) {
+      $content = $substrFunction($content, 0, $pos)
+                 .$this->twig->render('winzouCoreBundle:Google:amazon.html.twig')
+                 .$substrFunction($content, $pos);
+    }
+
     // On définit dans la réponse le contenu modifié
     $response->setContent($content);
   }

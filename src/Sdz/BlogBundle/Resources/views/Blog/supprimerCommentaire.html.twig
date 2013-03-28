@@ -1,0 +1,30 @@
+{# src/Sdz/BlogBundle/Resources/views/Blog/supprimer.html.twig #}
+
+{% extends "SdzBlogBundle::layout.html.twig" %}
+
+{% block title %}
+  Supprimer un commentaire - {{ parent() }}
+{% endblock %}
+
+{% block sdzblog_body %}
+
+  <h2>Supprimer un commentaire</h2>
+
+  <p>
+    Etes-vous certain de vouloir supprimer le commentaire suivant ?
+  </p>
+  <div class="well">
+    {{ commentaire.contenu }}
+  </div>
+
+  {# On met l'id de l'article dans la route de l'action du formulaire #}
+  <form action="{{ path('sdzblog_supprimer_commentaire', {'id': commentaire.id}) }}" method="post">
+    <a href="{{ path('sdzblog_voir', {'slug': commentaire.article.slug}) }}" class="btn">
+      <i class="icon-chevron-left"></i>
+      Retour à l'article
+    </a>
+    <input type="submit" value="Supprimer" class="btn btn-danger" />
+    {{ form_rest(form) }}
+  </form>
+
+{% endblock %}

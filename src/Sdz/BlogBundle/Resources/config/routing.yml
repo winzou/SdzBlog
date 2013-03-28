@@ -28,3 +28,9 @@ sdzblog_ajouter_commentaire:
     methods:  POST
     requirements:
         id:      \d+
+
+sdzblog_supprimer_commentaire:
+    pattern:   /supprimer/commentaire/{id}
+    defaults:  { _controller: SdzBlogBundle:Blog:supprimerCommentaire }
+    requirements:
+        id:  \d+

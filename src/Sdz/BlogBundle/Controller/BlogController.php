@@ -4,7 +4,6 @@
 
 namespace Sdz\BlogBundle\Controller;
 
-
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Form\Form;
@@ -40,7 +39,7 @@ class BlogController extends Controller
     return $this->render('SdzBlogBundle:Blog:index.html.twig', array(
       'articles' => $articles,
       'page'     => $page,
-      'nb_page'  => ceil(count($articles)/$nbParPage)
+      'nb_page'  => ceil(count($articles) / $nbParPage)
     ));
   }
 
@@ -74,7 +73,7 @@ class BlogController extends Controller
   public function ajouterAction()
   {
     $article = new Article;
-    if($this->getUser()) {
+    if ($this->getUser()) {
       // On définit le User par défaut dans le formulaire (utilisateur courant)
       $article->setUser($this->getUser());
     }
@@ -122,8 +121,8 @@ class BlogController extends Controller
         // On parcourt les articleCompetences pour leur ajouter l'article et les persister manuellement
         // (rappelez-vous, c'est articleCompetence la propriétaire dans sa relation avec Article !)
         foreach ($form->get('articleCompetences')->getData() as $ac) {
-        	$ac->setArticle($article);
-        	$em->persist($ac);
+          $ac->setArticle($article);
+          $em->persist($ac);
         }
         $em->flush();
         // --- Fin du cas 2/2 ---
@@ -155,7 +154,7 @@ class BlogController extends Controller
     // Si certains d'entre eux n'existent plus après la soumission, il faudra donc les supprimer
     $listAc = array();
     foreach ($article->getArticleCompetences()as $ac) {
-        $listeAc[] = $ac;
+      $listeAc[] = $ac;
     }
     // --- Fin du cas 1/3 ---
 
@@ -182,19 +181,19 @@ class BlogController extends Controller
         // --- Dans le cas où vous avez un champ "articleCompetences" dans le formulaire - 3/3 ---
         // On enregistre les articleCompetences (propriétaire) maintenant que $article a un id
         foreach ($form->get('articleCompetences')->getData() as $ac) {
-        	$ac->setArticle($article);
-        	$em->persist($ac);
+          $ac->setArticle($article);
+          $em->persist($ac);
         }
         // Et on supprime les articleCompetences qui existaient au début mais plus maintenant
         foreach ($listeAc as $originalAc) {
-        	foreach ($form->get('articleCompetences')->getData() as $ac) {
-        	  // Si $originalAc existe dans le formulaire, on sort de la boucle car pas besoin de la supprimer
-        	  if ($originalAc == $ac) {
-        	    continue 2;
-        	  }
-        	}
-        	// $originalAc n'existe plus dans le formulaire, on la supprime
-        	$em->remove($originalAc);
+          foreach ($form->get('articleCompetences')->getData() as $ac) {
+            // Si $originalAc existe dans le formulaire, on sort de la boucle car pas besoin de la supprimer
+            if ($originalAc == $ac) {
+              continue 2;
+            }
+          }
+          // $originalAc n'existe plus dans le formulaire, on la supprime
+          $em->remove($originalAc);
         }
         $em->flush();
         // --- Fin du cas 3/3 ---
@@ -278,6 +277,40 @@ class BlogController extends Controller
     ));
   }
 
+  /**
+   * @Secure(roles="ROLE_ADMIN")
+   */
+  public function supprimerCommentaireAction(Commentaire $commentaire)
+  {
+    // On crée un formulaire vide, qui ne contiendra que le champ CSRF
+    // Cela permet de protéger la suppression d'article contre cette faille
+    $form = $this->createFormBuilder()->getForm();
+
+    $request = $this->getRequest();
+    if ($request->getMethod() == 'POST') {
+      $form->bind($request);
+
+      if ($form->isValid()) { // Ici, isValid ne vérifie donc que le CSRF
+        // On supprime l'article
+        $em = $this->getDoctrine()->getManager();
+        $em->remove($commentaire);
+        $em->flush();
+
+        // On définit un message flash
+        $this->get('session')->getFlashBag()->add('info', 'Commentaire bien supprimé');
+
+        // Puis on redirige vers l'accueil
+        return $this->redirect($this->generateUrl('sdzblog_voir', array('slug' => $commentaire->getArticle()->getSlug())));
+      }
+    }
+
+    // Si la requête est en GET, on affiche une page de confirmation avant de supprimer
+    return $this->render('SdzBlogBundle:Blog:supprimerCommentaire.html.twig', array(
+      'commentaire' => $commentaire,
+      'form'        => $form->createView()
+    ));
+  }
+
   public function menuAction($nombre)
   {
     $repository = $this->getDoctrine()->getManager()->getRepository('SdzBlogBundle:Article');
@@ -327,7 +360,6 @@ class BlogController extends Controller
   {
     if (null === $commentaire) {
       $commentaire = new Commentaire;
-
     }
 
     // Si l'utilisateur courant est identifié, on l'ajoute au commentaire

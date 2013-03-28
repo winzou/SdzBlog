@@ -4,10 +4,17 @@
 {% import "SdzUserBundle::userHelpers.html.twig" as userHelpers %}
 
 <div id="comment{{ commentaire.id }}" itemscope itemtype="http://schema.org/Comment">
-    <em>
-      Le <time datetime="{{ commentaire.date|date('c') }}" itemprop="datePublished">{{ commentaire.date|date('d/m/Y à H\\hi') }}</time>,
-      <span itemprop="author">{{ userHelpers.link(commentaire.user, commentaire.auteur) }}</span> a écrit :
-    </em>
-    <br />
-    {{ commentaire.contenu|markdown }}
+  {% if is_granted('ROLE_ADMIN') %}
+    <div class="pull-right">
+      <a href="{{ path('sdzblog_supprimer_commentaire', {'id': commentaire.id}) }}" class="btn">
+        <i class="icon-trash"></i>
+      </a>
+    </div>
+  {% endif %}
+  <em>
+    Le <time datetime="{{ commentaire.date|date('c') }}" itemprop="datePublished">{{ commentaire.date|date('d/m/Y à H\\hi') }}</time>,
+    <span itemprop="author">{{ userHelpers.link(commentaire.user, commentaire.auteur) }}</span> a écrit :
+  </em>
+  <br />
+  {{ commentaire.contenu|markdown }}
 </div>

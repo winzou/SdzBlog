@@ -14,7 +14,7 @@
     Etes-vous certain de vouloir supprimer le commentaire suivant ?
   </p>
   <div class="well">
-    {{ commentaire.contenu }}
+    {{ commentaire.contenu|markdown }}
   </div>
 
   {# On met l'id de l'article dans la route de l'action du formulaire #}

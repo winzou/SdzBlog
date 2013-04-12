@@ -85,7 +85,9 @@
       {# Tous nos javascripts avec Assetic #}
       {% javascripts output='js/main.js' filter='?yui_js'
         'js/bootstrap.js'
-        '@SdzBlogBundle/Resources/public/js/*' %}
+        '@SdzBlogBundle/Resources/public/js/*'
+        '@winzouCoreBundle/Resources/public/js/repo.js'
+        '@winzouCoreBundle/Resources/public/js/main.js' %}
         <script type="text/javascript" src="{{ asset_url }}"></script>
       {% endjavascripts %}
     {% endblock %}

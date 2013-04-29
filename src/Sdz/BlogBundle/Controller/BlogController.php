@@ -34,12 +34,20 @@ class BlogController extends Controller
                      ->getManager()
                      ->getRepository('SdzBlogBundle:Article')
                      ->getArticles($nbParPage, $page);
-
+    //Si il n'y a qu'une seule page de résultat alors le resultat
+    //de ceil(count($articles)/$nbParPage) vaut 0
+    if(ceil(count($articles)/$nbParPage) == 0){
+        $nbrpage = 1;//Or il doit toujours y avoir au moins une page
+    }
+    else{
+        $nbrpage = ceil(count($articles)/$nbParPage);
+    }
+    
     // On passe le tout à la vue
     return $this->render('SdzBlogBundle:Blog:index.html.twig', array(
       'articles' => $articles,
       'page'     => $page,
-      'nb_page'  => ceil(count($articles) / $nbParPage)
+      'nb_page'  => $nbrpage
     ));
   }
 

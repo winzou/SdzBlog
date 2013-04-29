@@ -39,7 +39,7 @@ class BlogController extends Controller
     return $this->render('SdzBlogBundle:Blog:index.html.twig', array(
       'articles' => $articles,
       'page'     => $page,
-      'nb_page'  => ceil(count($articles) / $nbParPage)
+      'nb_page'  => ceil(count($articles) / $nbParPage) ?: 1
     ));
   }
 

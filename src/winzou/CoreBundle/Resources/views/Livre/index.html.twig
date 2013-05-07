@@ -1,0 +1,88 @@
+{% extends "::layout.html.twig" %}
+
+{% block title %}
+  Découvrez le livre Symfony2 - {{ parent() }}
+{% endblock %}
+
+{% block body %}
+
+  <h2>Découvrez le livre Symfony2</h2>
+  <p>
+  	Le <a href="http://www.siteduzero.com/informatique/tutoriels/developpez-votre-site-web-avec-le-framework-symfony2">cours Symfony2 disponible sur le Site du Zéro</a>
+  	a connu un grand succès, et le framework Symfony2 lui-même également. Les conditions étaient réunies pour sortir le cours en livre et en ebook !
+  </p>
+
+  <p>
+    Ce livre est pour l'instant le seul livre sur Symfony2, toutes langues confondues. Profitez donc de l'exclusivité française !
+  </p>
+
+  <div class="livre">
+      <h3>Livre papier</h3>
+      <div class="row">
+        <div class="span2">
+        	<img src="{{ asset('bundles/winzoucore/img/livre.jpg') }}" alt="Couverture du livre">
+        </div>
+        <div class="span3">
+            <h4>Caractéristiques</h4>
+            <ul>
+              <li>ISBN : 979-10-90085-42-8</li>
+              <li>Dimensions : 167x240x27mm</li>
+              <li>Nombre de pages : 512</li>
+              <li>Date de sortie : 22/03/2013</li>
+            </ul>
+        </div>
+        <div class="span3">
+          <h4>Acheter</h4>
+          {% include "winzouCoreBundle:Google:amazon.html.twig" %}
+          Disponible également :
+          	<ul>
+          		<li>
+          			<a href="http://boutique.siteduzero.com/boutique-614-1462-developpez-votre-site-web-avec-le-framework-symfony2.html">
+          				Sur le Site du Zéro
+          			</a>
+          		</li>
+          		<li>
+          			<a href="http://livre.fnac.com/a5266194/Alexandre-Bacco-Developpez-efficacement-votre-site-web-avec-le-framework-Symfony2">
+          				A la FNAC
+          			</a>
+          		</li>
+          		<li>
+          			<a href="http://www.decitre.fr/livres/developpez-votre-site-web-avec-le-framework-symfony2-9791090085428.html">
+          				Chez Decitre
+          			</a>
+          		</li>
+          	</ul>
+        </div>
+      </div>
+  </div>
+
+  <div class="livre">
+      <h3>Livre ebook</h3>
+      <div class="row">
+        <div class="span2">
+        	<img src="{{ asset('bundles/winzoucore/img/livre.jpg') }}" alt="Couverture du livre">
+        </div>
+        <div class="span3">
+            <h4>Caractéristiques</h4>
+            <ul>
+              <li>ISBN : 979-10-90085-43-5</li>
+              <li>Formats : EPUB et PDF, sans DRM</li>
+              <li>Nombre de pages : 512</li>
+              <li>Date de sortie : 22/03/2013</li>
+            </ul>
+        </div>
+        <div class="span3">
+          <h4>Acheter</h4>
+          Disponible :
+          	<ul>
+          		<li>
+          			<a href="http://boutique.siteduzero.com/boutique-614-1537-ebook-developpez-votre-site-web-avec-le-framework-symfony2.html">
+          				Sur le Site du Zéro
+          			</a>
+          		</li>
+          	</ul>
+        </div>
+      </div>
+  </div>
+
+{% endblock %}

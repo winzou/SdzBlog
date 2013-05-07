@@ -1,0 +1,15 @@
+#header iframe {
+    float: right;
+    margin: 1em;
+}
+
+.livre {
+    border: 1px #EAEAEA solid;
+    padding: 0.5em;
+    margin-bottom: 1em;
+    box-shadow: 3px 3px 5px 0px #cfcfcf;
+}
+
+.livre h3 {
+	margin-bottom: 1em;
+}

@@ -1,3 +1,7 @@
 livre_codesource:
     pattern:  /livre/codesource
     defaults: { _controller: winzouCoreBundle:Livre:codeSource }
+
+livre_home:
+    pattern:  /livre
+    defaults: { _controller: winzouCoreBundle:Livre:index }

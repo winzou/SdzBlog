@@ -184,17 +184,7 @@ class BlogController extends Controller
           $ac->setArticle($article);
           $em->persist($ac);
         }
-        // Et on supprime les articleCompetences qui existaient au début mais plus maintenant
-        foreach ($listeAc as $originalAc) {
-          foreach ($form->get('articleCompetences')->getData() as $ac) {
-            // Si $originalAc existe dans le formulaire, on sort de la boucle car pas besoin de la supprimer
-            if ($originalAc == $ac) {
-              continue 2;
-            }
-          }
-          // $originalAc n'existe plus dans le formulaire, on la supprime
-          $em->remove($originalAc);
-        }
+
         $em->flush();
         // --- Fin du cas 3/3 ---
 

@@ -23,7 +23,7 @@ class Competences implements FixtureInterface
       $manager->persist($liste_competences[$i]);
     }
 
-    // On déclenche l'neregistrement
+    // On déclenche l'enregistrement
     $manager->flush();
   }
 }

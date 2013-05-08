@@ -74,12 +74,12 @@ class Article
   private $categories;
 
   /**
-   * @ORM\OneToMany(targetEntity="Sdz\BlogBundle\Entity\Commentaire", mappedBy="article")
+   * @ORM\OneToMany(targetEntity="Sdz\BlogBundle\Entity\Commentaire", mappedBy="article", cascade="remove")
    */
   private $commentaires; // Ici commentaires prend un "s", car un article a plusieurs commentaires !
 
   /**
-   * @ORM\OneToMany(targetEntity="Sdz\BlogBundle\Entity\ArticleCompetence", mappedBy="article")
+   * @ORM\OneToMany(targetEntity="Sdz\BlogBundle\Entity\ArticleCompetence", mappedBy="article", cascade="remove")
    */
   private $articleCompetences;
 

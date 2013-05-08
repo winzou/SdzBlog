@@ -105,7 +105,7 @@ class BlogController extends Controller
 
         // --- Dans le cas où vous avez un champ "articleCompetences" dans le formulaire - 1/2 ---
         // Cette ligne est nécessaire pour qu'on puisse enregistrer en bdd en deux étapes :
-        // * D'abord l'article tout seul (c'est pour ça qu'on enlève les articleCompetences
+        // * D'abord l'article tout seul (c'est pour ça qu'on enlève les articleCompetences)
         // * Puis les articleCompetences, juste après, car on a besoin de l'id de l'$article
         //   Or cet id n'est attribué qu'au flush, car on utilise l'AUTOINCREMENT de MySQL !
         $article->getArticleCompetences()->clear();
@@ -153,7 +153,7 @@ class BlogController extends Controller
     // On place dans un tableau les articleCompetences que contient l'article avant la soumission du formulaire
     // Si certains d'entre eux n'existent plus après la soumission, il faudra donc les supprimer
     $listAc = array();
-    foreach ($article->getArticleCompetences()as $ac) {
+    foreach ($article->getArticleCompetences() as $ac) {
       $listeAc[] = $ac;
     }
     // --- Fin du cas 1/3 ---

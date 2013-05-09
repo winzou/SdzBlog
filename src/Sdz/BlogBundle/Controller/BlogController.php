@@ -152,7 +152,7 @@ class BlogController extends Controller
     // --- Dans le cas où vous avez un champ "articleCompetences" dans le formulaire - 1/3 ---
     // On place dans un tableau les articleCompetences que contient l'article avant la soumission du formulaire
     // Si certains d'entre eux n'existent plus après la soumission, il faudra donc les supprimer
-    $listAc = array();
+    $listeAc = array();
     foreach ($article->getArticleCompetences() as $ac) {
       $listeAc[] = $ac;
     }

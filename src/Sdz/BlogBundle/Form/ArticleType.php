@@ -34,7 +34,7 @@ class ArticleType extends AbstractType
           'type'         => new ArticleCompetenceType(),
           'allow_add'    => true,
           'allow_delete' => true,
-      	//'mapped'       => false,
+      	  'mapped'       => false,
           'by_reference' => false,
           'required'     => false
       ))

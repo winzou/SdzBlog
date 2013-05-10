@@ -29,12 +29,10 @@ class ArticleType extends AbstractType
        ** - 2e argument : type du champ, ici "collection" qui est une liste de quelque chose ;
        ** - 3e argument : tableau d'options du champ.
       */
-
       ->add('articleCompetences', 'collection', array(
           'type'         => new ArticleCompetenceType(),
           'allow_add'    => true,
           'allow_delete' => true,
-      	//'mapped'       => false,
           'by_reference' => false,
           'required'     => false
       ))

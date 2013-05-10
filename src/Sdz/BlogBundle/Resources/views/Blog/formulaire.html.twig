@@ -79,6 +79,8 @@ $(document).ready(function() {
     // Ajout du listener sur le clic du lien
     $lienSuppression.click(function(e) {
       $prototype.remove();
+      // On décrémente le compteur pour que le prochain ajout porte bien le numéro suivant
+      --index;
       e.preventDefault(); // évite qu'un # apparaisse dans l'URL
       return false;
     });

@@ -16,7 +16,7 @@ class ArticleRepository extends EntityRepository
   public function getSelectList()
   {
     $qb = $this->createQueryBuilder('a')
-               ->where('a.publication = 1');
+               ->where('a.publication = TRUE');
 
     return $qb;
   }
@@ -36,7 +36,7 @@ class ArticleRepository extends EntityRepository
                     ->addSelect('ac')
                   ->leftJoin('ac.competence', 'c')
                     ->addSelect('c')
-                  ->where('a.publication = 1')
+                  ->where('a.publication = TRUE')
                   ->orderBy('a.date', 'DESC')
                   ->getQuery();
 

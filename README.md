@@ -1,6 +1,6 @@
 # SdzBlog
 Code source du blog construit grâce au [cours du Site du Zéro](http://www.siteduzero.com/informatique/tutoriels/developpez-votre-site-web-avec-le-framework-symfony2).
-### [Ce cours Symfony2 est également disponible en livre](http://boutique.siteduzero.com/boutique-614-1462-developpez-votre-site-web-avec-le-framework-symfony2.html)
+### [Ce cours Symfony2 est également disponible en livre](http://www.eyrolles.com/Informatique/Livre/developpez-votre-site-web-avec-le-framework-symfony2-9791090085428)
 
 # Installation
 ## 1. Récupérer le code
